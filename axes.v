@@ -22,6 +22,7 @@
 
 module axes(
     input clk,
+    input reset,
     input [15:0] angular_rate_x,
     input [15:0] angular_rate_y,
     input [15:0] angular_rate_z,
@@ -65,76 +66,96 @@ module axes(
 	
 	always@ (posedge clk)
 	begin
-	   if (calibrate_timer < 8'hFE)
-	   begin
-	       // calibration step:
-	       // read the min and max values of the gyro at rest, 
-	       // and save them as the activation thresholds
-	       // also prepare to calulate average resting value
-	       calibrate_timer <= calibrate_timer + 1;
-	       
-//	       if (p_thresh_x > angular_rate_x)
-//	           p_thresh_x <= angular_rate_x;
-//	       if (n_thresh_x < angular_rate_x)
-//	           n_thresh_x <= angular_rate_x;
-	       sum_x <= sum_x + angular_rate_x;
-	       
-//	       if (p_thresh_y > angular_rate_y)
-//	           p_thresh_y <= angular_rate_y;
-//	       if (n_thresh_y < angular_rate_y)
-//	           n_thresh_y <= angular_rate_y;
-	       sum_y <= sum_y + angular_rate_y;
-	       
-//	       if (p_thresh_z > angular_rate_z)
-//	           p_thresh_z <= angular_rate_z;
-//	       if (n_thresh_z < angular_rate_z)
-//	           n_thresh_z <= angular_rate_z;
-	       sum_z <= sum_z + angular_rate_z;	       
-	   end 
-	   else if (calibrate_timer == 8'hFE)
-	   begin
-	       // divide each sum by 256 to get approximately the average
-	       // (took 255 samples, but close enough)
-	       // arithmetic right shift - keep sign
-	       avg_x <= sum_x >>> 8;
-	       avg_y <= sum_y >>> 8;
-	       avg_z <= sum_z >>> 8;
-	       calibrate_timer <= calibrate_timer + 1;
-	   end 
-	   else
-	   begin
-//           if(angular_rate_x > p_thresh_x && angular_rate_x < p_thresh_y)
-            if(angular_rate_x > (threshold - avg_x) && angular_rate_x < (neg_thresh - avg_x))
-                begin
-                    ad_x <=angular_rate_x - avg_x;//after calibration, remember to adjust for it
-                end
-            else
-                begin
-                    ad_x<=0 ; 
-                end
-            integrate_x <= integrate_x + {{48{ad_x[15]}},ad_x[15:0]};
-        
-            if(angular_rate_y > (threshold - avg_y) && angular_rate_y < (neg_thresh - avg_y))
-//            if(angular_rate_y > p_thresh_y && angular_rate_y < p_thresh_y)
-                begin
-                    ad_y <=angular_rate_y - avg_y;//after calibration, remember to adjust for it
-                end
-            else
-                begin
-                    ad_y<=0 ; 
-                end
-            integrate_y <= integrate_y + {{48{ad_y[15]}},ad_y[15:0]};
-
-            if(angular_rate_z > (threshold - avg_z) && angular_rate_z < (neg_thresh - avg_z))
-//            if(angular_rate_z > p_thresh_z && angular_rate_z < p_thresh_z)
-                begin
-                    ad_z <=angular_rate_z  - avg_z;//after calibration, remember to adjust for it
-                end
-            else
-                begin
-                    ad_z<=0 ; 
-                end
-            integrate_z <= integrate_z + {{48{ad_z[15]}},ad_z[15:0]};
+	   if (reset) begin
+	       calibrate_timer <= 0;
+           p_thresh_x <= 0;
+           n_thresh_x <= 0;
+           avg_x <= 0;
+           sum_x <= 0;
+           p_thresh_y <= 0;
+           n_thresh_y <= 0;
+           avg_y <= 0;
+           sum_y <= 0;
+           p_thresh_z <= 0;
+           n_thresh_z <= 0;
+           avg_z <= 0;
+           sum_z <= 0;
+           integrate_x <= 0;
+           integrate_y <= 0;
+           integrate_z <= 0;
+	   end
+	   else begin
+           if (calibrate_timer < 8'hFE)
+           begin
+               // calibration step:
+               // read the min and max values of the gyro at rest, 
+               // and save them as the activation thresholds
+               // also prepare to calulate average resting value
+               calibrate_timer <= calibrate_timer + 1;
+               
+    //	       if (p_thresh_x > angular_rate_x)
+    //	           p_thresh_x <= angular_rate_x;
+    //	       if (n_thresh_x < angular_rate_x)
+    //	           n_thresh_x <= angular_rate_x;
+               sum_x <= sum_x + angular_rate_x;
+               
+    //	       if (p_thresh_y > angular_rate_y)
+    //	           p_thresh_y <= angular_rate_y;
+    //	       if (n_thresh_y < angular_rate_y)
+    //	           n_thresh_y <= angular_rate_y;
+               sum_y <= sum_y + angular_rate_y;
+               
+    //	       if (p_thresh_z > angular_rate_z)
+    //	           p_thresh_z <= angular_rate_z;
+    //	       if (n_thresh_z < angular_rate_z)
+    //	           n_thresh_z <= angular_rate_z;
+               sum_z <= sum_z + angular_rate_z;	       
+           end 
+           else if (calibrate_timer == 8'hFE)
+           begin
+               // divide each sum by 256 to get approximately the average
+               // (took 255 samples, but close enough)
+               // arithmetic right shift - keep sign
+               avg_x <= sum_x >>> 8;
+               avg_y <= sum_y >>> 8;
+               avg_z <= sum_z >>> 8;
+               calibrate_timer <= calibrate_timer + 1;
+           end 
+           else
+           begin
+    //           if(angular_rate_x > p_thresh_x && angular_rate_x < p_thresh_y)
+                if(angular_rate_x > (threshold - avg_x) && angular_rate_x < (neg_thresh - avg_x))
+                    begin
+                        ad_x <=angular_rate_x - avg_x;//after calibration, remember to adjust for it
+                    end
+                else
+                    begin
+                        ad_x<=0 ; 
+                    end
+                integrate_x <= integrate_x + {{48{ad_x[15]}},ad_x[15:0]};
+            
+                if(angular_rate_y > (threshold - avg_y) && angular_rate_y < (neg_thresh - avg_y))
+    //            if(angular_rate_y > p_thresh_y && angular_rate_y < p_thresh_y)
+                    begin
+                        ad_y <=angular_rate_y - avg_y;//after calibration, remember to adjust for it
+                    end
+                else
+                    begin
+                        ad_y<=0 ; 
+                    end
+                integrate_y <= integrate_y + {{48{ad_y[15]}},ad_y[15:0]};
+    
+                if(angular_rate_z > (threshold - avg_z) && angular_rate_z < (neg_thresh - avg_z))
+    //            if(angular_rate_z > p_thresh_z && angular_rate_z < p_thresh_z)
+                    begin
+                        ad_z <=angular_rate_z  - avg_z;//after calibration, remember to adjust for it
+                    end
+                else
+                    begin
+                        ad_z<=0 ; 
+                    end
+                integrate_z <= integrate_z + {{48{ad_z[15]}},ad_z[15:0]};
+            end
         end
 	end
 	

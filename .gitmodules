@@ -1,0 +1,6 @@
+[submodule "final/gyro_racer_proj/gyro_racer.sdk/gyro_racer_sw/src"]
+	path = final/gyro_racer_proj/gyro_racer.sdk/gyro_racer_sw/src
+	url = https://github.com/sudoytang/ece532_game_logic
+[submodule "software"]
+	path = software
+	url = https://github.com/sudoytang/ece532_game_logic

@@ -115,7 +115,7 @@ ece532_gyro_racer/
 │   │   │   └── image.hpp
 │   │   └── resource/font_map.hpp
 │   ├── memory/ [Memory Library, use TLSF as memory pool]
-│   │   ├── tlsf/ [An referenced open-source implementation of memory pool]
+│   │   ├── tlsf/ [Referenced open-source implementation of memory pool]
 │   │   ├── memory.cpp
 │   │   └── memory.hpp
 │   ├── platform/ [Platform-dependent classes for interfacing devices]

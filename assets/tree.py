@@ -64,7 +64,7 @@ include_dir_skip_contents = {
 def should_exclude(name):
     return any(fnmatch.fnmatch(name, pattern) for pattern in exclude_patterns)
 
-def should_skip_contents(path, name):
+def should_skip_contents(path):
     # Convert path to relative path from root
     rel_path = os.path.relpath(path, root)
     # Normalize path separators to forward slashes
@@ -104,6 +104,8 @@ def get_single_file_path(path):
 
         if os.path.isfile(item_path):
             return item
+        elif os.path.isdir(item_path) and should_skip_contents(item_path):
+            return item + "/ " + get_skip_comment(item_path)
         elif os.path.isdir(item_path):
             sub_path = get_single_file_path(item_path)
             if sub_path:
@@ -147,7 +149,7 @@ def print_tree(start_path, prefix='', current_path=''):
             # Normalize path separators to forward slashes
             dir_path = dir_path.replace('\\', '/')
 
-            if should_skip_contents(path, name):
+            if should_skip_contents(path):
                 # Show skipped content directories as a single line with just the directory name
                 comment = get_skip_comment(path)
                 tree_lines.append(prefix + connector + name + "/ " + comment)

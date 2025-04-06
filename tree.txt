@@ -33,12 +33,10 @@
 │       │       └── new/vid_to_vga_mixer.v
 │       └── gyro_racer.xpr
 ├── ip/
-│   ├── ip_repo/
-│   │   └── gyro_reader_1.0/ [IP repository files for custom IP]
+│   ├── ip_repo/gyro_reader_1.0/ [IP repository files for custom IP]
 │   ├── ip_user_files/
 │   └── managed_ip_project/ [managed IP project files]
-├── ip_keyboard/
-│   └── axi_ps2_1.0/ [IP repository files for digilent PS/2 IP]
+├── ip_keyboard/axi_ps2_1.0/ [IP repository files for digilent PS/2 IP]
 ├── software/
 │   ├── game/
 │   │   ├── data/

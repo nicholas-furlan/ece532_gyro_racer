@@ -59,6 +59,9 @@ include_dir_skip_contents = {
     'ip_keyboard/axi_ps2_1.0': 'IP repository files for digilent PS/2 IP',
     'assets/output': 'Header files generated from images',
     'assets/resource': 'Images for characters/tracks/fonts',
+    'docs': 'Documentation of the project',
+    'stash': 'Temporary files during development',
+    '**/memory/tlsf': 'An referenced open-source implementation of memory pool'
 }
 
 def should_exclude(name):

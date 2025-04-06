@@ -1,3 +1,43 @@
+# ECE532 Gyro Racer
+
+This repository contains hardware files (Verilog/VHDL source files) and the software project (C/C++ files) for our ECE532 project.
+
+## Project Description
+This is a 2D racing game developed on the Nexys 4 DDR FPGA development board. The game utilizes the PMOD gyroscopes and other input methods to control the racing car, providing an immersive gaming experience.
+
+The game supports both single-player and multiplayer modes. In single-player mode, players compete in a time trial to achieve the best lap time, while in multiplayer mode, players can compete against friends.
+
+## Getting Started
+### Hardware Requirements
+- Nexys 4 DDR FPGA Development Board
+- VGA Monitor
+- PMOD GYRO (optional, but the key feature of our game)
+- USB Keyboard (optional, alternative controller)
+
+### Setup Instructions
+0. Clone this repository to your local machine (you may use `git clone --recursive` to clone all the submodules)
+1. (optional) Connect the PMOD GYROs to PMOD connectors JA and JC.
+2. (optional) Connect USB keyboard to the USB port.
+3. Connect a VGA monitor to the VGA port.
+4. Power on the Nexys 4 DDR board.
+5. Open Project with Vivado 2018.3, run synthesis, implementation, generate bitstream, export hardware, use the generated bitstream to program your board.
+6. Launch Xilinx SDK, create a new C++ empty project with BSP package.
+7. Copy all files from `software/` to the C++ project.
+8. Create a new Run Configuration, Compile and Run in Xilinx SDK.
+
+### How to Play
+- In the title screen and settings interface, the on-board buttons can be used for selection
+- Select between single-player time trial and multiplayer mode at the title screen
+- In the settings interface, you can:
+  - Choose your preferred controller (PMOD Gyroscope, on-board buttons, or keyboard)
+  - Select the race track
+  - Set the number of laps for the race
+- In the game, use the specified controller to control the racing car
+- Try to complete the race track in the shortest time possible
+
+## Design Tree
+```
+ece532_gyro_racer/
 ├── assets/
 │   ├── output/ [Header files generated from images]
 │   ├── resource/ [Images for characters/tracks/fonts]
@@ -98,3 +138,4 @@
 ├── stash/ [Temporary files during development]
 ├── README.md
 └── tree.txt
+```

@@ -152,8 +152,11 @@ The design tree structure is organized into the following parts:
     - `gyro_racer.srcs/constrs_1/`: The constraint file used in the project.
 
 - `ip/`: The packaged IP location
+
 - `ip_keyboard/`: The AXI PS/2 IP from Digilent Inc. for keyboard interfacing.
+
 - `software/`: The software C++ files for this project.
+
 - `stash/`: The temporary files used during development, which can be safely ignored.
 
 See `tree.txt` for the generated version of the design tree.
@@ -177,3 +180,7 @@ The simulation uses the same graphics library as the FPGA implementation, ensuri
 ![End Screen](docs/assets/end.png)
 *End screen showing the race completion time results*
 
+# Acknowledgements
+- This project uses [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) as its default font.
+- This project uses [TLSF](http://www.gii.upv.es/tlsf/) as its memory pool for dynamic memory allocation.
+- The video part is developed according to [this tutorial](https://numato.com/kb/simple-hdmi-vga-framebuffer-design-example-on-neso-artix-7-fpga-board/).

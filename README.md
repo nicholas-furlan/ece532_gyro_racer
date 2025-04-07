@@ -181,6 +181,7 @@ The simulation uses the same graphics library as the FPGA implementation, ensuri
 *End screen showing the race completion time results*
 
 # Acknowledgements
-- This project uses [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) as its default font.
+- This project uses [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) as its default font. Additionally, the font from Super Mario Bros. was used in the title screen (taken from [here](https://www.spriters-resource.com/nes/supermariobros/)).
 - This project uses [TLSF](http://www.gii.upv.es/tlsf/) as its memory pool for dynamic memory allocation.
+- This project uses edited sprites from both Super Mario Kart and Mario Kart: Super Circuit, taken from [here](https://www.spriters-resource.com/snes/smariokart/) and [here](https://www.spriters-resource.com/game_boy_advance/mariokartsupercircuit/).
 - The video part is developed according to [this tutorial](https://numato.com/kb/simple-hdmi-vga-framebuffer-design-example-on-neso-artix-7-fpga-board/).
